@@ -35,6 +35,8 @@ Vim编辑器它Linux上的地位就像Edit程序在DOS上一样，虽然没有�
 在上学期就选修了java程序设计，所以对java熟悉一些，这次翻阅资料，了解了java的GUI以及对java编译解释过程更加清晰。
 1. javac:将源文件编译成字节码，生成filename.class文件。
 2. java: 将字节码放到解释器上执行。
-
+3. java中数据类型和C++非常接近，如boolean,char,int,double,float,但需要注意String是一个类不是基本数据类型，但是非常有用。
+4. java中分支判断语句，循环语句都和C++很相近,但java不支持C++灵活的指针操作（很庆幸）。
+5. Java中AWT提供了抽象窗口包，Swing为GUI设计包，提供了布局管理
 <h1>Ant</h1>
 <h1>JUnit</h1>
