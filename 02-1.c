@@ -40,12 +40,19 @@ int main(int argc,char* argv[]){
     	return 0;
     }
     share_memory->size = size;
-    if((pid = fork()) = (pid_t)-1){
+    if((pid = fork()) == (pid_t)-1){
     	return 1;
     }
     if(pid == 0) {
+    	printf("CHILD: shared memory attached at address %p\n", shared_memory );
 
-    }else{
+    	share_memory->fib[0] = 0;
+    	share_memory->fib[1] = 1;
+    	for(i = 2;i < share_memory->size;i++){
+    		share_memory->fib[i] = share_memory->fib[i-1]+ share_memory->fib[i-2];
+    		shmdt((void *)share_memory);
+    	}
+    }else{//父进程
     	wait(NULL);
     	for(i=0;i<share_memory->size;i++){
     		printf("%d:%ld\n",i,share_memory->fib[i] );
