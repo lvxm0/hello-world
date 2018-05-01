@@ -21,7 +21,7 @@ void* calu(void* data){
 	int c = index->col;
 
 	int res = 0;
-	for(int i = 0;i < ;i++){
+	for(int i = 0;i < Col ;i++){
 		res += input_matrix1[r][i] * input_matrix2[i][c];
 	}
 	res_matrix[r][c] = res;
@@ -56,12 +56,13 @@ int main(){
     }
     //store row and column info
     Data data[30][30];
+    int i,j;
     // (3*4) * (4*5)->res[3][5] 
      for(i = 0; i < Row; i++){
         for(j = 0; j < Col2; j++){
             data[i][j].row = i;
             data[i][j].col = j;
-            int res;
+            int ret;
             //create thread
             ret = pthread_create(&thread[i][j], NULL, calu, (void*)&data[i][j]);
             //is success
@@ -71,6 +72,14 @@ int main(){
             }
         }
     }
+
+
+    for(i = 0; i < Row; i++){
+        for(j = 0; j < Col2; j++){
+        	pthread_join(thread[i][j],NULL);
+        }
+    }
+
     printf("output\n");
     for(i = 0; i < Row; i++){
         for(j = 0; j < Col2; j++){
@@ -80,3 +89,7 @@ int main(){
     }
 	return 0;
 }
+
+
+
+
