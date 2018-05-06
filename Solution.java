@@ -131,9 +131,10 @@ public class Solution extends Jigsaw {
     	
         getPath();
         
-        
-	System.out.println(info+"\n"+solutionp+"\n"+getSolutionPath()+"\n"+begins + this.getBeginJNode().toString()
-			+"\n"+ends + this.getEndJNode().toString()+total + searchedNodesNum+"\n"+ dep + this.getCurrentJNode().getNodeDepth() );
+	        
+
+	System.out.println("Solution Path: "+"\n"+"Solution Path: "+"\n"+getSolutionPath()+"\n"+"Begin state:" + this.getBeginJNode().toString()
+			+"\n"+"End state:"+ this.getEndJNode().toString()+"Total number of searched nodes:" + searchedNodesNum+"\n"+ "Depth of the current node is:" + this.getCurrentJNode().getNodeDepth() );
 		return isCompleted;
     }
 
