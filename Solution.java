@@ -1,8 +1,8 @@
 package solution;
 
-import java.io.PrintWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.util.Queue;
+import java.util.Set;
 import java.util.Vector;
 import jigsaw.Jigsaw;
 import jigsaw.JigsawNode;
@@ -13,18 +13,23 @@ import jigsaw.JigsawNode;
  */
 public class Solution extends Jigsaw {
 
-	  private Vector<JigsawNode> openList; // open表 ：用以保存已发现但未访问的节点
-	  private Vector<JigsawNode> closeList; // close表：用以保存已访问的节点
-	  private Vector<JigsawNode> solutionPath;// 解路径 ：用以保存从起始状态到达目标状态的移动路径中的每一个状态节点
-	  private boolean isCompleted; // 完成标记：初始为false;当求解成功时，将该标记至为true
-	  private int searchedNodesNum; // 已访问节点数： 用以记录所有访问过的节点的数量
+	  private Vector<JigsawNode> openList;
+	  // open表 ：用以保存已发现但未访问的节点
+	  private Set<JigsawNode> closeList; 
+	  // close表：用以保存已访问的节点
+	  //private Vector<JigsawNode> solutionPath;
+	  // 解路径 ：用以保存从起始状态到达目标状态的移动路径中的每一个状态节点
+	  private boolean isCompleted; 
+	  // 完成标记：初始为false;当求解成功时，将该标记至为true
+	  private int searchedNodesNum; 
+	  // 已访问节点数： 用以记录所有访问过的节点的数量
 	  
 	/**
      * 拼图构造函数
      */
     public Solution() {
 		
-		this.solutionPath = null;
+		//this.solutionPath = null;
 		this.isCompleted = false;
     }
 
@@ -37,7 +42,7 @@ public class Solution extends Jigsaw {
     	
         super(bNode, eNode);
 		
-		this.solutionPath = null;
+		//this.solutionPath = null;
 		this.isCompleted = false;
         
     }
@@ -80,19 +85,20 @@ public class Solution extends Jigsaw {
      */
     public boolean BFSearch(JigsawNode bNode, JigsawNode eNode) {
     	
-    	
-    	this.openList = new Vector<JigsawNode>();
-		this.closeList = new Vector<JigsawNode>();
+    	this.openList = null;
+    	this.closeList = null;
+    	this.openList = new Vector<JigsawNode>(1000);
+	//	this.closeList = new Set<JigsawNode>();
         // if finished ,return true
 		isCompleted = false;
-		this.solutionPath = null;
+		//this.solutionPath = null;
 		searchedNodesNum = 0;
 		// store the follow nodes
 		Vector<JigsawNode> followNode = new Vector<JigsawNode>();
 		
 		beginJNode = new JigsawNode(bNode);
 		endJNode = new JigsawNode(eNode);
-		this.openList.addElement(beginJNode);
+		this.openList.add(beginJNode);
       
 		addNodeOpenList(beginJNode);
 
@@ -109,7 +115,7 @@ public class Solution extends Jigsaw {
 
             // delete the node in open ,and add the node in close(2-2)从openList中删除节点N,并将其放入closeList中，表示以访问节点			
 			openList.removeElementAt(0);
-			closeList.addElement(this.currentJNode);
+			closeList.add(this.currentJNode);
 			searchedNodesNum++;
 
            
@@ -183,3 +189,4 @@ public class Solution extends Jigsaw {
         jNode.setEstimatedValue(estimate);
     }
 }
+
