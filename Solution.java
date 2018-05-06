@@ -1,7 +1,7 @@
-package solution;
+//package solution;
 
 
-import java.util.Queue;
+
 import java.util.Set;
 import java.util.Vector;
 import jigsaw.Jigsaw;
@@ -17,11 +17,11 @@ public class Solution extends Jigsaw {
 	  // open表 ：用以保存已发现但未访问的节点
 	  private Set<JigsawNode> closeList; 
 	  // close表：用以保存已访问的节点
-	  //private Vector<JigsawNode> solutionPath;
+	  
 	  // 解路径 ：用以保存从起始状态到达目标状态的移动路径中的每一个状态节点
 	  private boolean isCompleted; 
 	  // 完成标记：初始为false;当求解成功时，将该标记至为true
-	  private int searchedNodesNum; 
+	  
 	  // 已访问节点数： 用以记录所有访问过的节点的数量
 	  
 	/**
@@ -29,7 +29,7 @@ public class Solution extends Jigsaw {
      */
     public Solution() {
 		
-		//this.solutionPath = null;
+		
 		this.isCompleted = false;
     }
 
@@ -42,7 +42,7 @@ public class Solution extends Jigsaw {
     	
         super(bNode, eNode);
 		
-		//this.solutionPath = null;
+		
 		this.isCompleted = false;
         
     }
@@ -55,8 +55,8 @@ public class Solution extends Jigsaw {
 		JigsawNode tempJNode;
 		for(int i=0; i<4; i++){
 			tempJNode = new JigsawNode(jNode);
-			if(tempJNode.move(i) && !this.closeList.contains(tempJNode) && !this.openList.contains(tempJNode))
-				followJNodes.addElement(tempJNode);
+			if(tempJNode.move(i) &&( !this.closeList.contains(tempJNode) )&&( !this.openList.contains(tempJNode)) )
+				{followJNodes.addElement(tempJNode);}
 		}
 		return followJNodes;
 	}
@@ -87,12 +87,12 @@ public class Solution extends Jigsaw {
     	
     	this.openList = null;
     	this.closeList = null;
-    	this.openList = new Vector<JigsawNode>(1000);
-	//	this.closeList = new Set<JigsawNode>();
+    	this.openList = new Vector<JigsawNode>();
+	
         // if finished ,return true
 		isCompleted = false;
-		//this.solutionPath = null;
-		searchedNodesNum = 0;
+		
+		int searchedNodesNum = 0;
 		// store the follow nodes
 		Vector<JigsawNode> followNode = new Vector<JigsawNode>();
 		
@@ -103,13 +103,13 @@ public class Solution extends Jigsaw {
 		addNodeOpenList(beginJNode);
 
         
-        while (openList.isEmpty() != true) {
+        while (!openList.isEmpty()) {
             // openList first node = currentJNode
             //      currentJNode == endJNode,finish,isCompleted=true，exit
             currentJNode = openList.elementAt(0);
             if (currentJNode.equals(this.endJNode)){
                 isCompleted = true;
-               // this.calSolutionPath();
+            
                 break;
             }
 
@@ -122,23 +122,18 @@ public class Solution extends Jigsaw {
             // find is not visited node and add to the openlist
 			followNode = this.findFollowJNodes(currentJNode);
             while (!followNode.isEmpty()) {
-                //this.addNodeOpenList(followNode.elementAt(0));
+                
             	openList.addElement(followNode.get(followNode.size()-1));
             	followNode.remove(followNode.size()-1);
                 
             }
         }
-    	//return true;
+    	
         getPath();
         
         
-        System.out.println("Jigsaw BFSearch Result:");
-        System.out.println("Solution Path: ");
-        System.out.println(getSolutionPath());
-        System.out.println("Begin state:" + this.getBeginJNode().toString());
-        System.out.println("End state:" + this.getEndJNode().toString());
-        System.out.println("Total number of searched nodes:" + searchedNodesNum);
-        System.out.println("Depth of the current node is:" + this.getCurrentJNode().getNodeDepth());
+	System.out.println(info+"\n"+solutionp+"\n"+getSolutionPath()+"\n"+begins + this.getBeginJNode().toString()
+			+"\n"+ends + this.getEndJNode().toString()+total + searchedNodesNum+"\n"+ dep + this.getCurrentJNode().getNodeDepth() );
 		return isCompleted;
     }
 
@@ -153,7 +148,7 @@ public class Solution extends Jigsaw {
     public void estimateValue(JigsawNode jNode) {
         int s = 0; 
         int dimension = JigsawNode.getDimension();
-       // System.out.println("enter!");
+      
         for (int index = 1; index < dimension * dimension; index++) {
             if (jNode.getNodesState()[index] + 1 != jNode.getNodesState()[index + 1]) {
                 s++;
@@ -163,8 +158,8 @@ public class Solution extends Jigsaw {
      // the current position get wrong piece.
         int falsePiece = 0;
         for (int index = 1; index < dimension * dimension; index++) {
-            if (jNode.getNodesState()[index] != index)
-            	falsePiece++;
+            if (jNode.getNodesState()[index] != index){
+            	falsePiece++;}
           }
         
         int mahadis = 0;
@@ -182,11 +177,9 @@ public class Solution extends Jigsaw {
 
 			}	
 		}
-        //int estimate = (int) (s * 600 + mahadis * 500 + distance * 900 + falsePiece * 100);
-        int estimate = (int) (s * 200 + mahadis * 400 + distance * 1200 + falsePiece * 100);
-       // int estimate = 6 * s + 1 * falsePiece + 10 * mahadis + jNode.getNodeDepth();
-        
+        int power1 = 200,power2 = 400,power3=1200,power4 = power1;
+        int estimate = (int) (s * power1 + mahadis * power2 + distance * power3 + falsePiece * power4);
+       
         jNode.setEstimatedValue(estimate);
     }
 }
-
